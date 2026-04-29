@@ -1,0 +1,13 @@
+1
+00:00:00,500 --> 00:00:03,500
+[Multimedia Player]
+Initiating System...
+
+2
+00:00:04,000 --> 00:00:07,000
+Multimedia's Project
+VLC Engine : Online and Working!
+
+3
+00:00:07,500 --> 00:00:09,500
+Thank you for your attention,teacher!
