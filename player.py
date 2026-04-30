@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QVB
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QKeySequence
 
-# FIX FOR WINDOWS: Directory path for VLC libraries
+#Directory path for VLC libraries
 os.add_dll_directory(r'C:\Program Files\VideoLAN\VLC')
 
 class ClickableSlider(QSlider):
@@ -50,12 +50,12 @@ class MediaPlayer(QMainWindow):
             }
         """)
 
-        # --- 1. SET UP THE VLC ENGINE ---
+        #SET UP THE VLC ENGINE
         # Initialize the underlying VLC instance and create a media player object
         self.instance = vlc.Instance()
         self.media_player = self.instance.media_player_new()
 
-        # --- 2. CREATE THE MAIN INTERFACE ---
+        #CREATE THE MAIN INTERFACE
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
         self.layout = QVBoxLayout()
@@ -63,14 +63,14 @@ class MediaPlayer(QMainWindow):
         self.layout.setContentsMargins(0, 0, 0, 0) 
         self.central_widget.setLayout(self.layout)
 
-        # --- 3. THE VIDEO SCREEN ---
+        #THE VIDEO SCREEN
         self.video_frame = QWidget(self)
         self.video_frame.setStyleSheet("background-color: black;")
         # Tell the video frame to expand as much as possible, pushing controls to the bottom
         self.video_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.layout.addWidget(self.video_frame)
 
-        # --- TIME SLIDER ---
+        #TIME SLIDER
         self.position_slider = ClickableSlider(Qt.Horizontal, self)
         self.position_slider.setMaximum(1000)
         self.position_slider.setStyleSheet("margin-left: 10px; margin-right: 10px;")
@@ -83,15 +83,15 @@ class MediaPlayer(QMainWindow):
         self.layout.addWidget(self.position_slider)
         self.is_dragging = False # Flag to prevent UI updates while the user is seeking
         
-        # --- 4. CONTROL BAR ---
+        #CONTROL BAR
         self.control_container = QWidget()
         self.control_container.setStyleSheet("background-color: #2b2b2b;") 
         self.control_layout = QHBoxLayout(self.control_container)
         self.control_layout.setContentsMargins(10, 5, 10, 10)
         self.layout.addWidget(self.control_container)
 
-        # --- BUTTONS ---
-        # Note: setFocusPolicy(Qt.NoFocus) prevents the Spacebar from accidentally clicking the last used button
+        # BUTTONS 
+        # setFocusPolicy(Qt.NoFocus) prevents the Spacebar from accidentally clicking the last used button
         
         self.btn_open = QPushButton("Open Video")
         self.btn_open.setFocusPolicy(Qt.NoFocus) 
@@ -113,7 +113,7 @@ class MediaPlayer(QMainWindow):
         self.btn_subs.clicked.connect(self.load_subtitles)
         self.control_layout.addWidget(self.btn_subs)
         
-        # --- VOLUME CONTROLS ---
+        # VOLUME CONTROLS 
         self.control_layout.addStretch(1) # Pushes the volume slider to the far right
         
         self.volume_container = QWidget()
@@ -136,20 +136,20 @@ class MediaPlayer(QMainWindow):
         self.control_layout.addWidget(self.volume_container)
         self.is_fullscreen = False
         
-        # --- TIMER ---
+        # TIMER 
         # A timer that queries the VLC player every 100ms to update the timeline slider
         self.timer = QTimer(self)
         self.timer.setInterval(100) 
         self.timer.timeout.connect(self.update_ui)
 
-        # --- KEYBOARD SHORTCUTS ---
+        # KEYBOARD SHORTCUTS 
         self.shortcut_space = QShortcut(QKeySequence("Space"), self)
         self.shortcut_space.activated.connect(self.play_pause)
 
         self.shortcut_esc = QShortcut(QKeySequence("Esc"), self)
         self.shortcut_esc.activated.connect(self.exit_fullscreen)
 
-    # --- LOGIC AND ACTIONS ---
+    # LOGIC AND ACTIONS 
 
     def open_file(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Choose Video", ".", "Video Files (*.mp4 *.avi *.mkv)")
@@ -254,7 +254,7 @@ class MediaPlayer(QMainWindow):
             if current_pos >= 0:
                 self.position_slider.setValue(current_pos)
         
-# --- APPLICATION STARTUP ---
+# APPLICATION STARTUP 
 if __name__ == "__main__":
     
     app = QApplication(sys.argv) 
